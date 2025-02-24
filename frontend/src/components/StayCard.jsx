@@ -44,7 +44,7 @@ const StayCard = (stay) => {
               <BiArea />
             </div>
             <div className='text-base'>
-              {stay?.surface ? stay.surface : "6"}
+              {stay?.surface ? stay.surface : "6"} sq ft.
             </div>
           </div>
           <div className='flex items-center text-gray-600 gap-1'>
