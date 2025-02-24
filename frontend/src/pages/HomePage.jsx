@@ -1,11 +1,11 @@
 import HeroSection from "../components/HeroSection";
-import ApartmentsPage from "./ApartmentsPage";
+import StayPage from "./StayPage";
 
 const HomePage = () => {
   return (
     <div>
       <HeroSection />
-      <ApartmentsPage />
+      <StayPage />
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Navbar = () => {
             />
           </svg>
         </span>
-        bookMyApartment
+        BookMyStay
       </Link>
       <input type='checkbox' className='peer hidden' id='navbar-open' />
       <label

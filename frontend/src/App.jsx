@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import ApartmentDetailPage from "./pages/ApartmentDetailPage";
+import StayDetailPage from "./pages/StayDetailPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import PricingPage from "./pages/PricingPage";
 import FeaturesPage from "./pages/FeaturesPage";
 import SupportPage from "./pages/SupportPage";
-import ApartmentsPage from "./pages/ApartmentsPage";
+import StayPage from "./pages/StayPage";
 
 const App = () => {
   return (
@@ -15,8 +15,8 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/apartment' element={<ApartmentsPage />} />
-        <Route path='/apartment/:id' element={<ApartmentDetailPage />} />
+        <Route path='/stay' element={<StayPage />} />
+        <Route path='/stay/:id' element={<StayDetailPage />} />
         <Route path='/auth/login' element={<LoginPage />} />
         <Route path='/auth/signup' element={<SignUpPage />} />
         <Route path='/pricing' element={<PricingPage />} />
