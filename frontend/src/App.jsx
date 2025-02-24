@@ -11,7 +11,7 @@ import StayPage from "./pages/StayPage";
 
 const App = () => {
   return (
-    <div className=' w-full sm:max-w-[96%] mx-auto bg-white dark:bg-gray-800'>
+    <div className=' w-full sm:max-w-[96%] mx-auto'>
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
