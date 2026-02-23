@@ -1,43 +1,43 @@
-import { NextResponse } from "next/server";
 import { signToken } from "@/lib/auth";
+import dbConnect from "@/lib/dbConnect";
+import User from "@/models/user.modal";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
-import { mockUsers } from "../signup/route"; // Correctly import the mock DB from the sibling folder
+import { NextResponse } from "next/server";
 
-// Create some default users so we can test immediately without signing up
-// Realistically, you would seed your database for Admin / Host testing.
-if (mockUsers.length === 0) {
-  // Generate a default password 'password123' for testing
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync("password123", salt);
+// if (mockUsers.length === 0) {
+//   // Generate a default password 'password123' for testing
+//   const salt = bcrypt.genSaltSync(10);
+//   const hash = bcrypt.hashSync("password123", salt);
 
-  // Default Admin
-  mockUsers.push({
-    id: "admin_1",
-    name: "System Admin",
-    email: "admin@bookmystay.com",
-    password: hash,
-    role: "admin",
-  });
-  // Default Host
-  mockUsers.push({
-    id: "host_1",
-    name: "Property Owner",
-    email: "host@bookmystay.com",
-    password: hash,
-    role: "host",
-  });
-  // Default Customer
-  mockUsers.push({
-    id: "cust_1",
-    name: "John Traveler",
-    email: "user@bookmystay.com",
-    password: hash,
-    role: "customer",
-  });
-}
+//   // Default Admin
+//   mockUsers.push({
+//     id: "admin_1",
+//     name: "System Admin",
+//     email: "admin@bookmystay.com",
+//     password: hash,
+//     role: "admin",
+//   });
+//   // Default Host
+//   mockUsers.push({
+//     id: "host_1",
+//     name: "Property Owner",
+//     email: "host@bookmystay.com",
+//     password: hash,
+//     role: "host",
+//   });
+//   // Default Customer
+//   mockUsers.push({
+//     id: "cust_1",
+//     name: "John Traveler",
+//     email: "user@bookmystay.com",
+//     password: hash,
+//     role: "customer",
+//   });
+// }
 
 export async function POST(request) {
+  await dbConnect();
   try {
     const body = await request.json();
     const { email, password } = body;
@@ -49,8 +49,7 @@ export async function POST(request) {
       );
     }
 
-    // Find the user by email
-    const user = mockUsers.find((u) => u.email === email);
+    const user = User.find((u) => u.email === email);
     if (!user) {
       return NextResponse.json(
         { error: "Invalid credentials" },
@@ -58,7 +57,6 @@ export async function POST(request) {
       );
     }
 
-    // Verify the password
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return NextResponse.json(
@@ -67,7 +65,6 @@ export async function POST(request) {
       );
     }
 
-    // Generate the JWT token payload containing role and identifying info
     const token = await signToken({
       id: user.id,
       email: user.email,
@@ -75,7 +72,6 @@ export async function POST(request) {
       role: user.role,
     });
 
-    // Set token cookie
     const cookieStore = await cookies();
     cookieStore.set("token", token, {
       httpOnly: true,
@@ -85,7 +81,6 @@ export async function POST(request) {
       path: "/",
     });
 
-    // Send back user data
     return NextResponse.json(
       {
         user: {

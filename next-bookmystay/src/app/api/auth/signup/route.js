@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
 import { signToken } from "@/lib/auth";
+import dbConnect from "@/lib/dbConnect";
+import User from "@/models/user.modal";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
-
-// Mock Database (since we don't have a real DB configured yet)
-// We will store mock users in memory for now. In production, this goes to Prisma/Postgres/Mongo.
-export const mockUsers = [];
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
+    await dbConnect();
+
     const body = await request.json();
     const { firstName, lastName, email, password, role = "customer" } = body;
 
@@ -19,8 +19,7 @@ export async function POST(request) {
       );
     }
 
-    // Check if user already exists
-    const existingUser = mockUsers.find((user) => user.email === email);
+    const existingUser = await User.findOne({ email }).lean();
     if (existingUser) {
       return NextResponse.json(
         { error: "User already exists with this email" },
@@ -28,45 +27,35 @@ export async function POST(request) {
       );
     }
 
-    // Hash the password securely
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create the new user
-    const newUser = {
-      id: `usr_${Date.now()}`,
+    const newUser = await User.create({
       name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
-      role, // Default role is 'customer'
-    };
+      role,
+    });
 
-    // Save to our mock "database"
-    mockUsers.push(newUser);
-
-    // Generate the JWT token
     const token = await signToken({
-      id: newUser.id,
+      id: newUser._id.toString(),
       email: newUser.email,
       name: newUser.name,
       role: newUser.role,
     });
 
-    // Set the token inside a secure HttpOnly cookie
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     cookieStore.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 60 * 60 * 24,
       path: "/",
     });
 
-    // Return the user data (excluding password)
     return NextResponse.json(
       {
         user: {
-          id: newUser.id,
+          id: newUser._id.toString(),
           name: newUser.name,
           email: newUser.email,
           role: newUser.role,

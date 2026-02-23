@@ -1,6 +1,7 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { getUserSession } from "@/lib/session";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,9 +23,11 @@ export default async function RootLayout({ children }) {
   const session = await getUserSession();
 
   return (
-    <html lang='en'>
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Toaster />
         <Navbar session={session} />
         {children}
       </body>
