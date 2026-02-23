@@ -10,6 +10,7 @@ import {
   Clock,
   Heart,
   CheckCircle2,
+  Users,
 } from "lucide-react";
 
 export default function Home() {
@@ -146,9 +147,9 @@ export default function Home() {
       </section>
 
       {/* Booking Search Bar overlay */}
-      <section className='max-w-5xl mx-auto px-4 sm:px-6 relative -mt-20 sm:-mt-16 z-30'>
-        <div className='bg-white rounded-2xl shadow-xl shadow-slate-200/50 ring-1 ring-slate-100 p-2 sm:p-2 sm:pl-8 flex flex-col sm:flex-row items-center gap-2 sm:gap-0'>
-          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-3 sm:border-r border-slate-100'>
+      <section className='max-w-6xl mx-auto px-4 sm:px-6 relative -mt-20 sm:-mt-16 z-30'>
+        <div className='bg-white rounded-2xl shadow-xl shadow-slate-200/50 ring-1 ring-slate-100 p-2 sm:p-2 sm:pl-8 flex flex-col md:flex-row items-center gap-2 md:gap-0'>
+          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-3 md:border-r border-slate-100'>
             <MapPin className='w-5 h-5 text-green-500 hidden xl:block' />
             <div className='w-full'>
               <p className='text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5'>
@@ -161,7 +162,8 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-3 sm:border-r border-slate-100'>
+
+          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-3 md:border-r border-slate-100'>
             <Calendar className='w-5 h-5 text-green-500 hidden xl:block' />
             <div className='w-full'>
               <p className='text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5'>
@@ -174,8 +176,23 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className='w-full sm:w-auto p-1.5 flex-shrink-0'>
-            <button className='w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 sm:px-8 flex items-center justify-center gap-2 transition-all shadow-md shadow-green-600/20 active:scale-95'>
+
+          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-3 md:border-r border-slate-100'>
+            <Users className='w-5 h-5 text-green-500 hidden xl:block' />
+            <div className='w-full'>
+              <p className='text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5'>
+                Guests
+              </p>
+              <input
+                type='text'
+                placeholder='Add guests'
+                className='w-full outline-none text-slate-800 font-medium placeholder-slate-300 bg-transparent text-sm sm:text-base focus:ring-0 p-0 border-0'
+              />
+            </div>
+          </div>
+
+          <div className='w-full md:w-auto p-1.5 flex-shrink-0'>
+            <button className='w-full md:w-auto bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 sm:px-8 flex items-center justify-center gap-2 transition-all shadow-md shadow-green-600/20 active:scale-95'>
               <Search className='w-5 h-5' />
               <span className='font-semibold'>Search</span>
             </button>

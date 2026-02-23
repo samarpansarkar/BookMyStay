@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import StayCard from "@/components/StayCard";
-import { Search } from "lucide-react";
+import { Search, MapPin, Calendar, Users } from "lucide-react";
 
 export default function StayPage() {
   const [loading, setLoading] = useState(false);
@@ -36,15 +36,55 @@ export default function StayPage() {
           </p>
         </div>
 
-        <div className='max-w-3xl mx-auto bg-white rounded-2xl p-2 flex items-center shadow-lg relative z-10'>
-          <input
-            type='text'
-            placeholder='Search by city, type, or address...'
-            className='w-full px-4 py-3 outline-none text-slate-700'
-          />
-          <button className='bg-green-600 hover:bg-green-700 text-white p-3 px-6 rounded-xl flex items-center gap-2 transition-colors font-medium'>
-            <Search className='w-5 h-5' /> Search
-          </button>
+        <div className='max-w-5xl mx-auto bg-white rounded-2xl shadow-xl shadow-slate-300/50 p-2 sm:p-2 sm:pl-8 flex flex-col md:flex-row items-center gap-2 md:gap-0 relative z-10'>
+          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-2 md:border-r border-slate-100'>
+            <MapPin className='w-5 h-5 text-green-500 hidden xl:block' />
+            <div className='w-full text-left'>
+              <p className='text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5 mt-1 md:mt-0'>
+                Location
+              </p>
+              <input
+                type='text'
+                placeholder='Where are you going?'
+                className='w-full outline-none text-slate-800 font-medium placeholder-slate-300 bg-transparent text-sm focus:ring-0 p-0 border-0'
+              />
+            </div>
+          </div>
+
+          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-2 md:border-r border-slate-100'>
+            <Calendar className='w-5 h-5 text-green-500 hidden xl:block' />
+            <div className='w-full text-left'>
+              <p className='text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5 mt-1 md:mt-0'>
+                Dates
+              </p>
+              <input
+                type='text'
+                placeholder='Add dates'
+                className='w-full outline-none text-slate-800 font-medium placeholder-slate-300 bg-transparent text-sm focus:ring-0 p-0 border-0'
+              />
+            </div>
+          </div>
+
+          <div className='flex-1 w-full flex items-center xl:gap-4 px-4 py-2 md:border-r border-slate-100'>
+            <Users className='w-5 h-5 text-green-500 hidden xl:block' />
+            <div className='w-full text-left'>
+              <p className='text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5 mt-1 md:mt-0'>
+                Guests
+              </p>
+              <input
+                type='text'
+                placeholder='Add guests'
+                className='w-full outline-none text-slate-800 font-medium placeholder-slate-300 bg-transparent text-sm focus:ring-0 p-0 border-0'
+              />
+            </div>
+          </div>
+
+          <div className='w-full md:w-auto p-1.5 flex-shrink-0'>
+            <button className='w-full md:w-auto bg-green-600 hover:bg-green-700 text-white rounded-xl p-3 sm:px-8 flex items-center justify-center gap-2 transition-all shadow-md shadow-green-600/20 active:scale-95'>
+              <Search className='w-5 h-5' />
+              <span className='font-semibold'>Search</span>
+            </button>
+          </div>
         </div>
       </div>
 

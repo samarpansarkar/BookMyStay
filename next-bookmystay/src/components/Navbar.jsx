@@ -3,10 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { User, LogOut } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ session }) => {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleLogout = async () => {
+        await fetch("/api/auth/logout", { method: "POST" });
+        window.location.href = "/";
+    };
 
     return (
         <header className='relative flex max-w-7xl flex-col overflow-hidden px-4 py-4 text-slate-700 md:mx-auto md:flex-row md:items-center'>
@@ -76,9 +82,26 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className='md:mr-12 mt-2 md:mt-0'>
-                        <Link href="/auth/login" className='rounded-full border-2 border-green-500 px-6 py-2 text-green-600 transition-colors hover:bg-green-500 hover:text-white'>
-                            Login
-                        </Link>
+                        {session ? (
+                            <div className="flex items-center gap-4">
+                                <Link
+                                    href={`/${session.role}/dashboard`}
+                                    className='flex items-center gap-2 rounded-full border-2 border-green-500 px-5 py-2 text-green-600 transition-colors hover:bg-green-50 hover:text-green-700 font-bold'>
+                                    <User className="w-4 h-4" /> Dashboard
+                                </Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className='flex items-center justify-center p-2 rounded-full bg-slate-100 text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors'
+                                    title="Logout"
+                                >
+                                    <LogOut className="w-5 h-5" />
+                                </button>
+                            </div>
+                        ) : (
+                            <Link href="/auth/login" className='rounded-full border-2 border-green-500 px-6 py-2 text-green-600 transition-colors hover:bg-green-500 hover:text-white font-bold'>
+                                Login
+                            </Link>
+                        )}
                     </li>
                 </ul>
             </nav>

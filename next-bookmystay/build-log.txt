@@ -1,0 +1,49 @@
+
+> next-bookmystay@0.1.0 build C:\Users\samar\OneDrive\Desktop\NEXTJS\BookMyStay\next-bookmystay
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\samar\OneDrive\Desktop\NEXTJS\BookMyStay\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\samar\OneDrive\Desktop\NEXTJS\BookMyStay\next-bookmystay\pnpm-lock.yaml
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./next-bookmystay/src/app/(host)/host-dashboard/page.js:212:3
+Parsing ecmascript source code failed
+  210 |   );
+  211 | }
+> 212 | ```
+      |   ^
+> 213 | 
+      | ^
+
+Unterminated template
+
+
+./next-bookmystay/src/app/api/auth/login/route.js:5:1
+Module not found: Can't resolve './signup/route'
+  3 | import bcrypt from "bcryptjs";
+  4 | import { cookies } from "next/headers";
+> 5 | import { mockUsers } from "./signup/route"; // Importing the mock DB for now
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | // Create some default users so we can test immediately without signing up
+  8 | // Realistically, you would seed your database for Admin / Host testing.
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./next-bookmystay/src/app/(host)/host-dashboard/page.js:212:3)
+    at <unknown> (./next-bookmystay/src/app/api/auth/login/route.js:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.
