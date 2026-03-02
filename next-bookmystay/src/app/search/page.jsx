@@ -202,7 +202,7 @@ export default function SearchPage() {
                           + taxes and fees
                         </p>
                         <Link
-                          href={`/hotel/${item}`}
+                          href={`/hotels/${item}`}
                           className='bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700 transition inline-block text-center w-full'>
                           See availability
                         </Link>

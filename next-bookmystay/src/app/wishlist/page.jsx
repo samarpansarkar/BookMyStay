@@ -46,7 +46,7 @@ export default function WishlistPage() {
                     </span>
                   </p>
                   <Link
-                    href={`/hotel/${item}`}
+                    href={`/hotels/${item}`}
                     className='text-sm font-bold text-blue-600 hover:text-blue-800 transition'>
                     View Deal
                   </Link>

@@ -41,7 +41,7 @@ export default function UserBookingsPage() {
                       Booking #BMS-1234{item}
                     </p>
                     <h2 className='text-xl font-bold text-gray-900 border-b border-transparent hover:border-blue-600 inline-block cursor-pointer'>
-                      <Link href={`/hotel/${item}`}>
+                      <Link href={`/hotels/${item}`}>
                         Luxury Resort & Spa Maldives
                       </Link>
                     </h2>
