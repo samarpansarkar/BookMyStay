@@ -1,6 +1,38 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("customer");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, email, password, role }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error || "Registration failed");
+      } else {
+        router.push("/login");
+      }
+    } catch (err) {
+      setError("Network error");
+    }
+  };
+
   return (
     <div className='min-h-[calc(100vh-theme(spacing.16))] bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
@@ -20,7 +52,8 @@ export default function RegisterPage() {
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
         <div className='bg-white py-8 px-4 shadow-xl sm:rounded-lg sm:px-10 border border-gray-100'>
           {/* Logic: Form onSubmit handler for registration API */}
-          <form className='space-y-6' action='#' method='POST'>
+          <form className='space-y-6' onSubmit={handleSubmit}>
+            {error && <p className='text-sm text-red-600'>{error}</p>}
             <div className='grid grid-cols-2 gap-4'>
               <div>
                 <label
@@ -34,6 +67,8 @@ export default function RegisterPage() {
                     name='firstName'
                     type='text'
                     required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                   />
                 </div>
@@ -50,6 +85,8 @@ export default function RegisterPage() {
                     name='lastName'
                     type='text'
                     required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                   />
                 </div>
@@ -69,6 +106,8 @@ export default function RegisterPage() {
                   type='email'
                   autoComplete='email'
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                 />
               </div>
@@ -86,6 +125,8 @@ export default function RegisterPage() {
                   name='password'
                   type='password'
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                 />
               </div>
@@ -101,6 +142,8 @@ export default function RegisterPage() {
                 <select
                   id='role'
                   name='role'
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
                   className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white'>
                   <option value='customer'>
                     Guest (Looking to book stays)
